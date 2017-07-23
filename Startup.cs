@@ -50,7 +50,10 @@ namespace RestfulApi
                 cfg.CreateMap<RestfulApi.Entities.Author, RestfulApi.Models.AuthorDto>()
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
                     .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Today.Year - src.BirthDate.Year));
+     
+                cfg.CreateMap<RestfulApi.Entities.Book, RestfulApi.Models.BookDto>();
            });
+
 
 
             // if (env.IsDevelopment())
@@ -75,6 +78,13 @@ namespace RestfulApi
 
 
             app.UseMvc();
+
+            // app.UseMvc(routes =>
+            // {
+            //     routes.MapRoute(
+            //         name: "default",
+            //         template: "{controller=Home}/{action=Index}/{id?}");
+            // });
         }
 
 

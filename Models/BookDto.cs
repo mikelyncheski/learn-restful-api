@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 
-namespace RestfulApi.Entities
+namespace RestfulApi.Models
 {
-    //https://www.mockaroo.com/991a0950
-    public class Book
+    public class BookDto
     {
         public int Id { get; set; }
         public int AuthorId { get; set; }

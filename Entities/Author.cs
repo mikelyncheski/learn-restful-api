@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace RestfulApi.Entities
 {
+    //https://www.mockaroo.com/480b5dc0
     public class Author
     {
         public int Id { get; set; }
