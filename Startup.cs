@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 
 namespace RestfulApi
@@ -36,7 +37,16 @@ namespace RestfulApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(setupAction => 
+            {
+                // Complain if unsupported media type is requested.  
+                // Don't just return JSON (the default), return 406 Not Acceptable instead
+                setupAction.ReturnHttpNotAcceptable = true;  
+
+                // JSON is the only output format by default.  If you want XML or other to be the default,
+                // insert it at the beginning of the list.
+                setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            });
 
             // var connection = @"data source=.;User Id=CoreUser;Password=eX@mlple879;database=HarrierCore;";  // TODO: Move to config file
             // services.AddDbContext<MyDBDataContext>(options => options.UseSqlServer(connection));
