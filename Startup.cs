@@ -62,6 +62,8 @@ namespace RestfulApi
                     .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Today.Year - src.BirthDate.Year));
      
                 cfg.CreateMap<RestfulApi.Entities.Book, RestfulApi.Models.BookDto>();
+                
+                cfg.CreateMap<RestfulApi.Models.AuthorForAddDto, RestfulApi.Entities.Author>();
            });
 
 

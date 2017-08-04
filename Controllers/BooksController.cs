@@ -17,10 +17,10 @@ namespace RestfulApi.Controllers
         [HttpGet()]
         public IActionResult GetBooksForAuthor(int authorId)
         {
-            if (!Context.AuthorList.Exists(a => a.Id == authorId))
+            if (!Respository.AuthorExists(authorId))
                 return NotFound();
 
-            var booksFromRepo = Context.BookList.Where(b => b.AuthorId == authorId);
+            var booksFromRepo = Respository.GetBookList(authorId);
 
             var booksForAuthor = Mapper.Map<IEnumerable<BookDto>>(booksFromRepo);
 
@@ -31,10 +31,10 @@ namespace RestfulApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetBook(int authorId, int id)
         {
-            if (!Context.AuthorList.Exists(a => a.Id == authorId))
+            if (!Respository.AuthorExists(authorId))
                 return NotFound();
 
-            var book = Context.BookList.FirstOrDefault(b => b.Id == id && b.AuthorId == authorId);
+            var book = Respository.GetBook(authorId, id);
             if (book == null)
                 return NotFound();  // 404
 
