@@ -57,6 +57,14 @@ namespace RestfulApi.Entities
             AuthorList.Add(author);
         }
 
+    
+        public static void AddBookForAuthor(int authorId, Book book)
+        {
+            book.Id = BookList.Max(b => b.Id) + 1;
+            book.AuthorId = authorId;
+            BookList.Add(book);
+        }
+
 
         public static bool Save()
         {

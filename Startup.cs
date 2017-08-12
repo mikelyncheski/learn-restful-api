@@ -64,6 +64,8 @@ namespace RestfulApi
                 cfg.CreateMap<RestfulApi.Entities.Book, RestfulApi.Models.BookDto>();
                 
                 cfg.CreateMap<RestfulApi.Models.AuthorForAddDto, RestfulApi.Entities.Author>();
+
+                cfg.CreateMap<RestfulApi.Models.BookForAddDto, RestfulApi.Entities.Book>();
            });
 
 
