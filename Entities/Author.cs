@@ -15,5 +15,8 @@ namespace RestfulApi.Entities
         public string EMail { get; set; }
         public string Gender { get; set; }
         public DateTime BirthDate { get; set; }
+
+        
+        public ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }

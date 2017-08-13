@@ -55,6 +55,9 @@ namespace RestfulApi.Entities
         {
             author.Id = AuthorList.Max(a => a.Id) + 1;
             AuthorList.Add(author);
+
+            foreach (var book in author.Books)
+                AddBookForAuthor(author.Id, book);
         }
 
     
