@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using RestfulApi.Entities;
 using RestfulApi.Models;
 using System.Collections.Generic;
@@ -53,6 +54,18 @@ namespace RestfulApi.Controllers
         
             var authorToReturn = Mapper.Map<AuthorDto>(authorEntity);
             return CreatedAtRoute("GetAuthor", new { id = authorToReturn.Id }, authorToReturn);   // Puts Location http://localhost:5000/api/Authors/53 in header
+        }
+
+
+
+        // POST Properly return a 409 error when key is incorrectly past on a post and the key already exists.
+        [HttpPost("{id}")]
+        public IActionResult BlockAuthorAdd(int id)
+        {
+            if (Respository.AuthorExists(id))
+                return new StatusCodeResult(StatusCodes.Status409Conflict);
+
+            return NotFound();
         }
 
 
