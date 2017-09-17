@@ -59,6 +59,10 @@ namespace RestfulApi.Controllers
 
 
         // POST Properly return a 409 error when key is incorrectly past on a post and the key already exists.
+        // Posting (creating a new author) with an author id is not allowed because one is generated when it
+        // is added.   POST is not idompotent.  Multiple post records will not result in the same outcome.
+        // Most APIs would not add a method to return the correct result code.   But this is in keeping with
+        // the standard.
         [HttpPost("{id}")]
         public IActionResult BlockAuthorAdd(int id)
         {
@@ -84,6 +88,7 @@ namespace RestfulApi.Controllers
         public void Put(int id, [FromBody]string value)
         {
         }
+
 
         // DELETE api/values/5
         [HttpDelete("{id}")]

@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using HarrierGroup.Common;
 
 
 namespace RestfulApi.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthorCollectionController : Controller
+    public class AuthorCollectionsController : Controller
     {
         // POST api/values
         [HttpPost]
@@ -27,13 +28,24 @@ namespace RestfulApi.Controllers
             if (!Respository.Save())
                 throw new Exception("Failed to create the author collection.");  // Throw exception so the middleware handler does all of the error handling.
         
-          //  var authorToReturn = Mapper.Map<AuthorDto>(authorEntity);
-        //    return CreatedAtRoute("GetAuthor", new { id = authorToReturn.Id }, authorToReturn);   // Puts Location http://localhost:5000/api/Authors/53 in header
-            return Ok();
+            var authorCollectionToReturn = Mapper.Map<IEnumerable<AuthorDto>>(authorEntities);
+            var idsAsString = string.Join( ",", authorEntities.Select(a => a.Id.ToString()));
+            return CreatedAtRoute("GetAuthorCollectionX", new { ids = idsAsString }, authorCollectionToReturn);   // Puts Location http://localhost:5000/api/Authors/53 in header
         }
 
 
         // (key1, key2, ...)
-        // Custom Model Binder 
+        [HttpGet("({ids})", Name = "GetAuthorCollectionX")]
+        public IActionResult GetAuthorCollection(string ids)
+        // public IActionResult GetAuthorCollection(IEnumerable<int> ids)         // Custom Model Binder - Nah -- very complicated, see Demo - Working with Array Keys
+        {
+            var idList = StringHelper.StringToIntegerList(ids);
+            var authorList = Respository.GetAuthors(idList);
+
+            if (idList.Count() != authorList.Count())
+                return NotFound();
+ 
+            return Ok(Mapper.Map<IEnumerable<AuthorDto>>(authorList));
+        } 
     }
 }

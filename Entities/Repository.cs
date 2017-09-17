@@ -32,6 +32,12 @@ namespace RestfulApi.Entities
         }
 
 
+        public static IEnumerable<Author> GetAuthors(IEnumerable<int> ids)
+        {
+            return AuthorList.Where(a => ids.Contains(a.Id));
+        }
+        
+
         public static bool AuthorExists(int id)
         {
             return AuthorList.Exists(a => a.Id == id);
